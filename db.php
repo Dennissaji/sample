@@ -13,11 +13,20 @@ $pass=$_POST['password'];
     $sql="SELECT * FROM `users` where username='$name' && `password`='$pass' && `status`='approved' ";
     $res = $conn->query($sql);
     $num=mysqli_num_rows($res);
+    $row=mysqli_fetch_array($res);
     if($num==1) // user valid redirect to home
     {   $_SESSION['user']=$name;
         $_SESSION['status']="login successful";
         echo '<script>alert ("login succesful")</script> ';
-        header("location:home.php"); 
+        if($row['role']=="admin")
+        { $_SESSION['role']="admin";
+          header("location:.\home screen\adminhome.php");
+        }
+       else
+       {
+        $_SESSION['role']="user";
+        header("location:.\home screen\userhome.php");
+       }
     }
     else // login failed redirect to login
     {   $_SESSION['status']="invalid user name or password";
@@ -33,7 +42,7 @@ $pass=$_POST['password'];
 </body>
 <script>
 function delay(){
-  location.href="http://localhost/mini%20project/login.php"
+  location.href="C:\xampp\htdocs\project\login\login.php"
 }
 setTimeout(delay,1);
 </script>

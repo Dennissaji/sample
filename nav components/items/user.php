@@ -1,23 +1,21 @@
 <?php
- include('connect.php');
- $query="select * from `users` where status='pending'";
+ include('../../home screen/adminnav.php');
+ include('config.php');
+ $query="select * from `users`";
  $result=mysqli_query($conn,$query);
-?>
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="pendingstyle.css?v=<?php echo time(); ?>">
+<link rel="stylesheet" href="userstyle.css?v=<?php echo time(); ?>">
 <script src="https://code.jquery.com/jquery-3.6.4.js" crossorigin="anonymous"></script>
-<script  src="pendingajax.js"></script>
+<script  src="userajax.js"></script>
 
 </head>
 
 <body>
 <div class="heading">
-    <h> Pending User requests </h>
-</div>
-<div class="back">
-    <button onclick="back()">Go Back </button>
+    <h> USERS </h>
 </div>
 <div class="table-container">
 <table id="users">
@@ -32,7 +30,7 @@
     
      <?php
       if(!mysqli_num_rows($result))
-      {?> <td> No Pending Requests </td>
+      {?> <td> No Users </td>
       <?php }
       else
     {
@@ -48,10 +46,9 @@
                 <td><?php echo $row['username'];?></td>
                 <td><?php echo $row['designation'];?></td>
                 <td><?php echo $row['role'];?></td>
-                <td> <form method="post" action="pending.php">
+                <td> <form method="post" action="user.php">
                     <input type="hidden" name="id" value="<?php echo $row['email'];?>"/>
-                    <input type="submit" name="approve" id="approve" value="accept">
-                    <button name="reject" id="reject" class="reject" data-email='<?php echo "$email"; ?>' >REJECT</button></td>
+                    <button name="reject" id="reject" class="reject" data-email='<?php echo "$email"; ?>' >DELETE</button></td>
             </tr>
             <?php
                 }
@@ -60,23 +57,5 @@
 </table>
 
 </div>
-<script>
-    function back()
-    {
-        window.location.assign("home screen/adminhome.php");
-    }
-</script>
 </body>
-<?php
-    if(isset($_POST['approve']))
-    {
-        include('connect.php');
-        $id=$_POST['id'];
-        $query="update `users` set status='approved' where email='$id' ";
-        $result=mysqli_query($conn,$query);
-        
-
-    }
-    
-    ?>
 </html>

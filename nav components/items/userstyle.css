@@ -37,13 +37,14 @@
 
       border: none;
       color: white;
+      padding: 5px;
       text-decoration: none;
       cursor: pointer;
       background-color:#dc3545
     
   }
   .table-container{
-   left:5%;
+   left:20%;
    padding-right: 3%;
    position: absolute;
    top:12vh;
